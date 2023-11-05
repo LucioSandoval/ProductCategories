@@ -1,0 +1,35 @@
+<div class="head">
+    <h1>@ViewBag.ThisProduct.Name</h1>
+    <a class="backLink" href="/products">Back</a>
+</div>
+<div class="left">
+    <h2>Categories:</h2>
+    <ul>
+        @if (ViewBag.ProductWithCategories != null)
+        {
+            @foreach (var c in ViewBag.ProductWithCategories.AssocCats)
+            {
+                <li>@c.Category.Name</li>
+            }
+        }
+    </ul>
+</div>
+@model Association
+<form class="right" asp-action="AddCatToProd" asp-controller="Home" method="POST">
+    <h3>Add Category:</h3>
+    <div class="row">
+        <input type="hidden" asp-for="ProductId" value="@ViewBag.ThisProduct.ProductId">
+        <select asp-for="CategoryId">
+        @if (ViewBag.NotYetAssoc != null)
+        {
+            @foreach (var c in ViewBag.NotYetAssoc)
+            {
+                <option value="@c.CategoryId">@c.Name</option>
+            }
+        }
+        </select>
+    </div>
+    <div class="row">
+        <input value="Add" type="submit">
+    </div>
+</form>
